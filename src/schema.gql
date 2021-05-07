@@ -1,0 +1,56 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Profile {
+  uid: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  country: String!
+  postalCode: String!
+  state: String!
+  city: String!
+  address1: String!
+  address2: String!
+  birthDay: Date!
+  ethereumAddress: [String!]!
+  createdDate: Date!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Query {
+  getProfile(uid: String!): Profile!
+  listProfiles(skip: Int = 0, take: Int = 25): [Profile!]!
+}
+
+type Mutation {
+  upsertProfile(newProfileData: NewProfileInput!): Profile!
+  disableProfile(uid: String!): Boolean!
+}
+
+input NewProfileInput {
+  uid: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  country: String!
+  postalCode: String!
+  state: String!
+  city: String!
+  address1: String!
+  address2: String!
+  birthDay: DateTime!
+  ethereumAddress: [String!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Subscription {
+  profileAdded: Profile!
+}
