@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DateScalar } from '../common/scalars/date.scalar';
+import { DateScalar } from '../../common/scalars/date.scalar';
 import { ProfileResolver } from './profile.resolver';
 import { ProfileService } from './profile.service';
 import { UserProfileCollection } from './datasource/user-profile-collection'

@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing';
 import { NewProfileInput } from './dto/new-profile.input';
-import { DateScalar } from '../common/scalars/date.scalar';
+import { DateScalar } from '../../common/scalars/date.scalar';
 import { ProfileResolver } from './profile.resolver';
 import { ProfileService } from './profile.service';
 import { UserProfileCollection } from './datasource/user-profile-collection'
-import { databaseProviders } from '../common/firestore/database.providers';
+import { databaseProviders } from '../../common/firestore/database.providers';
 
 describe('CatsController', () => {
   let _profileService: ProfileService;

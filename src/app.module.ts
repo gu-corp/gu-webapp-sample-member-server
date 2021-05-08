@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ProfileModule } from './profile/profile.module';
+import { ProfileModule } from './gapi/profile/profile.module';
+import { TaskModule } from './gapi/task/task.module';
 import { join } from 'path';
 import { DateScalar } from '~/common/scalars/date.scalar';
 
 @Module({
   imports: [
     ProfileModule,
+    TaskModule,
     GraphQLModule.forRoot({
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
