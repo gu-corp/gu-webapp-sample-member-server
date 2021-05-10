@@ -3,6 +3,9 @@ import { PubSub } from 'apollo-server-express';
 import { Task } from './task.model';
 import { NewTaskInput } from './new-task.input';
 import { TaskService } from './task.service';
+import { GqlAuthGuard } from '~/auth/graphql/gql-auth.guard';
+import { CurrentUser } from '~/auth/graphql/current-user'
+import { UseGuards } from '@nestjs/common';
 
 const pubSub = new PubSub();
 
@@ -11,8 +14,10 @@ export class TaskResolver {
   constructor(private readonly taskService: TaskService) {
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(returns => [Task])
-  async listTasks(): Promise<Task[]> {
+  async listTasks(@CurrentUser() user): Promise<Task[]> {
+    console.log(`User: ${JSON.stringify(user)}`);
     
     return await this.taskService.listTasks();
   }

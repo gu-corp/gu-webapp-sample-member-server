@@ -21,7 +21,6 @@ export class ProfileService {
   async upsesrtProfile(data: NewProfileInput): Promise<Profile> {
     const profile: Profile = Object.assign(data, { createdDate: new Date(Date.now())})
     profile.createdDate = new Date(Date.now());
-    console.log(profile);
     return await this.userProfileCollection.upsesrtProfile(profile);
   }
 

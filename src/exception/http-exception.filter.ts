@@ -6,12 +6,13 @@ import { NotFoundException, ForbiddenException } from '@nestjs/common';
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const status = exception.getStatus();
-    console.log(`[Exception] ${new Date().toISOString()} : ${exception.message}`);
+    // console.log(`[Exception] ${new Date().toISOString()} : ${exception.message}`);
+
     if ( exception instanceof NotFoundException ) {
       throw new ApolloErrors.UserInputError(exception.message);
     } else if ( exception instanceof ForbiddenException ) {
       throw new ApolloErrors.ForbiddenError(exception.message);
     }
-    throw new ApolloErrors.ApolloError(exception.message);
+    throw exception;
   }
 }

@@ -1,16 +1,13 @@
 /**
  * DataSource class for UserCollection 
  */
-import { Injectable, Inject } from '@nestjs/common';
-import firebase from 'firebase';
-import FirebaseAdmin from 'firebase-admin';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { join } from 'path';
 import * as autoBind from 'auto-bind';
 import { Profile } from '../models/profile.model'
 import { toDocument, toProfile, UserProfileDocument } from './user-profile-document';
 
 const serviceAccount = require(join(process.cwd(), './gu-id-potal-dev-firebase-admin.json'));
-
 @Injectable()
 export class UserProfileCollection {
 
@@ -45,7 +42,7 @@ export class UserProfileCollection {
     const userRef = await this._db.collection('users').doc(uid);
     const snapshot = await userRef.get();
     if (!snapshot.exists) {
-      throw new Error(`No such document with ${uid}`);
+      return undefined;
     }
     return toProfile(snapshot.data());
   }
