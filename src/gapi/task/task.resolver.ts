@@ -5,7 +5,7 @@ import { NewTaskInput } from './new-task.input';
 import { TaskService } from './task.service';
 import { GqlAuthGuard } from '~/auth/graphql/gql-auth.guard';
 import { CurrentUser } from '~/auth/graphql/current-user'
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, Logger } from '@nestjs/common';
 
 const pubSub = new PubSub();
 
@@ -17,7 +17,7 @@ export class TaskResolver {
   @UseGuards(GqlAuthGuard)
   @Query(returns => [Task])
   async listTasks(@CurrentUser() user): Promise<Task[]> {
-    console.log(`User: ${JSON.stringify(user)}`);
+    Logger.log(`User: ${JSON.stringify(user)}`);
     
     return await this.taskService.listTasks();
   }

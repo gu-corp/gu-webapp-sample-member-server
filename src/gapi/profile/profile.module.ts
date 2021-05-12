@@ -4,7 +4,7 @@ import { DateScalar } from '../../common/scalars/date.scalar';
 import { ProfileResolver } from './profile.resolver';
 import { ProfileService } from './profile.service';
 import { UserProfileCollection } from './datasource/user-profile-collection'
-import { databaseProviders } from '~/common/firestore/database.providers';
+import { FirebaseService } from '~/common/firestore/firebase.service';
 
 @Module({
   providers: [
@@ -12,8 +12,8 @@ import { databaseProviders } from '~/common/firestore/database.providers';
     ProfileService, 
     DateScalar, 
     UserProfileCollection,
-     ...databaseProviders,
+    FirebaseService,
   ],
-  exports: [...databaseProviders],
+  exports: [FirebaseService],
 })
 export class ProfileModule {}

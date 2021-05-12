@@ -38,16 +38,17 @@ export class PassportFirebaseStrategy extends Strategy {
     // Need to use express-bearer-token middilware when use req.token for Bearer token
     const token = req.token;
     if (!token) {
-      const sessionCookie = req.cookies.session || '';
-      console.log(`Session Cookie:  ${sessionCookie}`)
-      firebaseAdmin
-        .auth()
-        .verifySessionCookie(sessionCookie).then(user => {
-        req.user = user;
-      }).catch( err => {
-        console.log(err);
-        this.fail(403);
-      });
+      // const sessionCookie = req.cookies.session || '';
+      // console.log(`Session Cookie:  ${sessionCookie}`)
+      // firebaseAdmin
+      //   .auth()
+      //   .verifySessionCookie(sessionCookie).then(user => {
+      //   req.user = user;
+      // }).catch( err => {
+      //   console.log(err);
+      //   this.fail(403);
+      // });
+      this.fail(403);
     } else {
       // Verify token
       const checkRevoked = options.checkRevoked || false;

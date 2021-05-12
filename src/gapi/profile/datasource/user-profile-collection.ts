@@ -2,22 +2,22 @@
  * DataSource class for UserCollection 
  */
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
 import { join } from 'path';
 import * as autoBind from 'auto-bind';
 import { Profile } from '../models/profile.model'
 import { toDocument, toProfile, UserProfileDocument } from './user-profile-document';
+import { FirebaseService } from '~/common/firestore/firebase.service'
 
-const serviceAccount = require(join(process.cwd(), './gu-id-potal-dev-firebase-admin.json'));
 @Injectable()
 export class UserProfileCollection {
 
   private _db: FirebaseFirestore.Firestore;
 
-  constructor(
-    @Inject('FIRESTORE_CONNECTION') db
-    )
+  constructor(firebaseService :FirebaseService)
   {
-    this._db = db;
+    this._db = firebaseService.firestore();
     autoBind(this);
   }
 

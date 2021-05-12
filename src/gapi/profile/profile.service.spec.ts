@@ -4,7 +4,7 @@ import { DateScalar } from '../../common/scalars/date.scalar';
 import { ProfileResolver } from './profile.resolver';
 import { ProfileService } from './profile.service';
 import { UserProfileCollection } from './datasource/user-profile-collection'
-import { databaseProviders } from '../../common/firestore/database.providers';
+import { FirebaseService } from '~/common/firestore/firebase.service';
 
 describe('CatsController', () => {
   let _profileService: ProfileService;
@@ -12,11 +12,11 @@ describe('CatsController', () => {
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      providers: [ProfileResolver, ProfileService, DateScalar, UserProfileCollection, ...databaseProviders],
-      }).compile();
+      providers: [ProfileResolver, ProfileService, DateScalar, UserProfileCollection, FirebaseService],
+    }).compile();
 
-      _profileService = moduleRef.get<ProfileService>(ProfileService);
-      _userProfileCollection = moduleRef.get<UserProfileCollection>(UserProfileCollection);
+    _profileService = moduleRef.get<ProfileService>(ProfileService);
+    _userProfileCollection = moduleRef.get<UserProfileCollection>(UserProfileCollection);
   });
 
   describe('upsertProfile', () => {

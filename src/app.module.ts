@@ -1,22 +1,25 @@
+import { join } from 'path';
+
+// Nest.js
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule, } from '@nestjs/graphql';
-import { GraphQLError, GraphQLFormattedError } from 'graphql';
+
+// App
 import { ProfileModule } from './gapi/profile/profile.module';
 import { TaskModule } from './gapi/task/task.module';
-import { join } from 'path';
-import { DateScalar } from '~/common/scalars/date.scalar';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
-import { NotFoundException, ForbiddenException } from '@nestjs/common';
-import * as ApolloErrors from 'apollo-server-errors';
-import { ConfigModule, ConfigService } from 'nestjs-config';
-import { FirebaseAdminModule } from '@tfarras/nestjs-firebase-admin';
-import * as path from 'path';
-
+import configuration from './config/configuration';
 @Module({
   controllers: [ AppController ],
   imports: [   
+    ConfigModule.forRoot({
+      envFilePath: ['.env.development.local', '.env.development'],
+      isGlobal: true,
+      load: [configuration],
+    }),
     ProfileModule,
     TaskModule,
     AuthModule,

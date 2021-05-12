@@ -3,9 +3,12 @@
  */
 import FirebaseAdmin from 'firebase-admin';
 import { join } from 'path';
+
+import { Test } from '@nestjs/testing';
+
 import { Profile } from '../models/profile.model';
-import { ProfileModule } from '../profile.module';
 import { UserProfileCollection } from './user-profile-collection';
+import { FirebaseService } from '~/common/firestore/firebase.service';
 
 const serviceAccount = require(join(process.cwd(), './gu-id-potal-dev-firebase-admin.json'));
 
@@ -16,15 +19,12 @@ describe('App loader test', () => {
   let _userProfileCollection;
 
   beforeAll(async() => {
-    if ( FirebaseAdmin.apps.length == 0 ) {
-      FirebaseAdmin.initializeApp({
-        credential: FirebaseAdmin.credential.cert(serviceAccount)
-      });
-    }
+    const moduleRef = await Test.createTestingModule({
+      providers: [UserProfileCollection, FirebaseService],
+    }).compile();
 
-    const db = FirebaseAdmin.firestore();
+    _userProfileCollection = moduleRef.get<UserProfileCollection>(UserProfileCollection);
 
-    _userProfileCollection = new UserProfileCollection(db);
     _uid = 'asdf';
     const profile: Profile = new Profile();
     
