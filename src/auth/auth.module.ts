@@ -1,6 +1,6 @@
-import { Module } from "@nestjs/common";
-import { PassportModule } from "@nestjs/passport";
-import { FirebaseAuthStrategy } from "./passport/firebase.strategy";
+import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
+import { FirebaseAuthStrategy } from './passport/firebase.strategy';
 // import { LocalStrategy } from "./passport/local.strategy";
 
 @Module({
@@ -9,4 +9,4 @@ import { FirebaseAuthStrategy } from "./passport/firebase.strategy";
   exports: [PassportModule],
   controllers: [],
 })
-export class AuthModule { }
+export class AuthModule {}

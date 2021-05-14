@@ -1,22 +1,24 @@
 /**
- * DataSource class for UserCollection 
+ * DataSource class for UserCollection
  */
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { join } from 'path';
 import * as autoBind from 'auto-bind';
-import { Profile } from '../models/profile.model'
-import { toDocument, toProfile, UserProfileDocument } from './user-profile-document';
-import { FirebaseService } from '~/common/firestore/firebase.service'
+import { Profile } from '../models/profile.model';
+import {
+  toDocument,
+  toProfile,
+  UserProfileDocument,
+} from './user-profile-document';
+import { FirebaseService } from '~/common/firestore/firebase.service';
 
 @Injectable()
 export class UserProfileCollection {
-
   private _db: FirebaseFirestore.Firestore;
 
-  constructor(firebaseService :FirebaseService)
-  {
+  constructor(firebaseService: FirebaseService) {
     this._db = firebaseService.firestore();
     autoBind(this);
   }
@@ -25,7 +27,7 @@ export class UserProfileCollection {
     // Logic
     const docRef = this._db.collection('users').doc(profile.uid);
 
-    // Firestore does not accept firestore timestamp, so set profile 
+    // Firestore does not accept firestore timestamp, so set profile
     const profileDoc = toDocument(profile);
     const result = await docRef.set(profileDoc);
 
@@ -55,11 +57,11 @@ export class UserProfileCollection {
       return [];
     }
 
-    let profiles: Profile[] = [];
+    const profiles: Profile[] = [];
 
-    snapshot.forEach(doc => {
+    snapshot.forEach((doc) => {
       console.log(doc.id, '=>', doc.data());
-      profiles.push(toProfile(doc))
+      profiles.push(toProfile(doc));
     });
     return profiles;
   }
@@ -68,9 +70,9 @@ export class UserProfileCollection {
     // Logic
     const docRef = this._db.collection('users').doc(uid);
 
-    // Firestore does not accept firestore timestamp, so set profile 
+    // Firestore does not accept firestore timestamp, so set profile
     const result = await docRef.set({
-      isDeleted: false
+      isDeleted: false,
     });
     return true;
   }
@@ -84,6 +86,4 @@ export class UserProfileCollection {
     const res = await this._db.collection('users').doc(uid).delete();
     return uid;
   }
-
-
 }

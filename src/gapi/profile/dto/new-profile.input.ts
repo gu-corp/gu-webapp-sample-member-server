@@ -44,9 +44,9 @@ export class NewProfileInput {
   @MaxLength(100)
   address2: string;
 
-  @Field(type => GraphQLISODateTime)
+  @Field((type) => GraphQLISODateTime)
   birthDay: Date;
 
-  @Field(type => [String])
+  @Field((type) => [String])
   ethereumAddress: string[];
 }

@@ -4,7 +4,6 @@ import { IsOptional, Length, MaxLength } from 'class-validator';
 
 @ObjectType()
 export class Profile {
-
   @Field()
   @MaxLength(30)
   uid: string;
@@ -47,13 +46,13 @@ export class Profile {
   @MaxLength(100)
   address2: string;
 
-  @Field(type => Date)
+  @Field((type) => Date)
   @MaxLength(50)
   birthDay: Date;
 
-  @Field(type => [String])
+  @Field((type) => [String])
   ethereumAddress: string[];
 
-  @Field(type => Date)
+  @Field((type) => Date)
   createdDate: Date;
 }

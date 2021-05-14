@@ -4,13 +4,13 @@ import { NewTaskInput } from './new-task.input';
 import { Logger } from '@nestjs/common';
 @Injectable()
 export class TaskService {
-  private _index: number = 0;
+  private _index = 0;
   private _tasks: Task[] = [];
-  
+
   async addTask(input: NewTaskInput): Promise<Task> {
-    let task = new Task();
+    const task = new Task();
     task.id = ++this._index;
-    task.name = input.name; 
+    task.name = input.name;
     const length = this._tasks.push(task);
     return this._tasks[length - 1];
   }

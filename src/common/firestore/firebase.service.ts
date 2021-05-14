@@ -5,10 +5,12 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class FirebaseService {
-  constructor(configService :ConfigService) {
-    if ( FirebaseAdmin.apps.length == 0 ) {
+  constructor(configService: ConfigService) {
+    if (FirebaseAdmin.apps.length == 0) {
       FirebaseAdmin.initializeApp({
-        credential: FirebaseAdmin.credential.cert(configService.get<string>('firebaseAdmin.serviceAccount'))
+        credential: FirebaseAdmin.credential.cert(
+          configService.get<string>('firebaseAdmin.serviceAccount'),
+        ),
       });
     }
   }
@@ -16,5 +18,4 @@ export class FirebaseService {
   firestore() {
     return FirebaseAdmin.firestore();
   }
-
 }

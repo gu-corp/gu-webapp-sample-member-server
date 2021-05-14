@@ -3,7 +3,7 @@ import { join } from 'path';
 // Nest.js
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { GraphQLModule, } from '@nestjs/graphql';
+import { GraphQLModule } from '@nestjs/graphql';
 
 // App
 import { ProfileModule } from './gapi/profile/profile.module';
@@ -13,8 +13,8 @@ import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import configuration from './config/configuration';
 @Module({
-  controllers: [ AppController ],
-  imports: [   
+  controllers: [AppController],
+  imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env.development.local', '.env.development'],
       isGlobal: true,
@@ -27,7 +27,7 @@ import configuration from './config/configuration';
     GraphQLModule.forRoot({
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
-      },    
+      },
       installSubscriptionHandlers: true,
       // typePaths: ['./**/*.gql'],
       // definitions: {
@@ -36,7 +36,6 @@ import configuration from './config/configuration';
       // },
       autoSchemaFile: join(process.cwd(), './src/schema.gql'),
     }),
-
   ],
 })
 export class AppModule {}

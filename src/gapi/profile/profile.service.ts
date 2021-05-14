@@ -1,17 +1,19 @@
-import { Injectable, NotFoundException, Inject, Redirect } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  Inject,
+  Redirect,
+} from '@nestjs/common';
 import { NewProfileInput } from './dto/new-profile.input';
 import { ListProfileArgs } from './dto/list-profile.args';
-import { Profile } from './models/profile.model'
+import { Profile } from './models/profile.model';
 import { UserProfileCollection } from './datasource/user-profile-collection';
 
 @Injectable()
 export class ProfileService {
   private _db;
-  
-  constructor(
-    private readonly userProfileCollection: UserProfileCollection    
-  ) {
-  };
+
+  constructor(private readonly userProfileCollection: UserProfileCollection) {}
 
   /**
    * Create new profile associate with specified uid
@@ -19,7 +21,9 @@ export class ProfileService {
    * @returns Created profile
    */
   async upsesrtProfile(data: NewProfileInput): Promise<Profile> {
-    const profile: Profile = Object.assign(data, { createdDate: new Date(Date.now())})
+    const profile: Profile = Object.assign(data, {
+      createdDate: new Date(Date.now()),
+    });
     profile.createdDate = new Date(Date.now());
     return await this.userProfileCollection.upsesrtProfile(profile);
   }
@@ -29,7 +33,7 @@ export class ProfileService {
   }
 
   async findAll(listProilfeArgs: ListProfileArgs): Promise<Profile[]> {
-    listProilfeArgs.skip
+    listProilfeArgs.skip;
     return undefined;
   }
 
@@ -41,7 +45,7 @@ export class ProfileService {
   async disableProfile(uid: string): Promise<boolean> {
     try {
       return await this.userProfileCollection.disableProfile(uid);
-    } catch ( err ) {
+    } catch (err) {
       throw new Error(`Can not remove specified profile of uid ${uid}`);
     }
   }

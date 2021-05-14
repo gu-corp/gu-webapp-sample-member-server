@@ -10,24 +10,27 @@ import { Profile } from '../models/profile.model';
 import { UserProfileCollection } from './user-profile-collection';
 import { FirebaseService } from '~/common/firestore/firebase.service';
 
-const serviceAccount = require(join(process.cwd(), './gu-id-potal-dev-firebase-admin.json'));
-
+const serviceAccount = require(join(
+  process.cwd(),
+  './gu-id-potal-dev-firebase-admin.json',
+));
 
 describe('App loader test', () => {
-  
   let _uid;
   let _userProfileCollection;
 
-  beforeAll(async() => {
+  beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [UserProfileCollection, FirebaseService],
     }).compile();
 
-    _userProfileCollection = moduleRef.get<UserProfileCollection>(UserProfileCollection);
+    _userProfileCollection = moduleRef.get<UserProfileCollection>(
+      UserProfileCollection,
+    );
 
     _uid = 'asdf';
     const profile: Profile = new Profile();
-    
+
     profile.uid = _uid;
     profile.firstName = 'Ada';
     profile.lastName = 'Lovelace';
@@ -38,20 +41,18 @@ describe('App loader test', () => {
     profile.address1 = 'Sakuragaoka-chi';
     // profile.address2 = 'Sakuragaoka-chi';
     profile.birthDay = new Date('1977/12/21');
-    profile.ethereumAddress = [
-      '0x131b395794e487b564fd86f5872727fc44544d23'
-    ];
+    profile.ethereumAddress = ['0x131b395794e487b564fd86f5872727fc44544d23'];
     profile.createdDate = new Date('2021/02/02 01:22:45');
     const createdProfile = await _userProfileCollection.upsesrtProfile(profile);
   });
 
-  afterAll(async() => {
+  afterAll(async () => {
     await _userProfileCollection.deleteProfile(_uid);
   });
 
-  test('Test findOneById', async() => {
+  test('Test findOneById', async () => {
     const profile2 = await _userProfileCollection.findOneById(_uid);
-    expect(profile2).toEqual({    
+    expect(profile2).toEqual({
       uid: _uid,
       firstName: 'Ada',
       middleName: '',
@@ -63,10 +64,8 @@ describe('App loader test', () => {
       address1: 'Sakuragaoka-chi',
       address2: '',
       birthDay: new Date('1977-12-20T15:00:00.000Z'),
-      ethereumAddress: [
-        '0x131b395794e487b564fd86f5872727fc44544d23'
-      ],
-      createdDate: new Date('2021-02-01T16:22:45.000Z')
-    })
+      ethereumAddress: ['0x131b395794e487b564fd86f5872727fc44544d23'],
+      createdDate: new Date('2021-02-01T16:22:45.000Z'),
+    });
   });
 });

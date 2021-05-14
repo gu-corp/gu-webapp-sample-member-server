@@ -1,6 +1,6 @@
 import FirebaseAdmin from 'firebase-admin';
 
-import { Profile } from '../models/profile.model'
+import { Profile } from '../models/profile.model';
 
 export interface UserProfileDocument {
   uid: string;
@@ -16,12 +16,12 @@ export interface UserProfileDocument {
   birthDay: FirebaseAdmin.firestore.Timestamp;
   ethereumAddress: string[];
   createdDate: FirebaseAdmin.firestore.Timestamp;
-  isDeleted: Boolean;
+  isDeleted: boolean;
 }
 
-export function validate(doc: UserProfileDocument)  {
+export function validate(doc: UserProfileDocument) {
   // Write Validateions
-  
+
   return true;
 }
 
@@ -37,11 +37,15 @@ export function toDocument(profile: Profile): UserProfileDocument {
     city: profile.city,
     address1: profile.address1,
     address2: profile.address2 ? profile.address2 : '',
-    birthDay: FirebaseAdmin.firestore.Timestamp.fromDate(new Date(profile.birthDay)),
+    birthDay: FirebaseAdmin.firestore.Timestamp.fromDate(
+      new Date(profile.birthDay),
+    ),
     ethereumAddress: profile.ethereumAddress,
-    createdDate: FirebaseAdmin.firestore.Timestamp.fromDate(profile.createdDate),
-    isDeleted: false
-  }
+    createdDate: FirebaseAdmin.firestore.Timestamp.fromDate(
+      profile.createdDate,
+    ),
+    isDeleted: false,
+  };
 }
 
 export function toProfile(data: FirebaseFirestore.DocumentData): Profile {
@@ -58,6 +62,6 @@ export function toProfile(data: FirebaseFirestore.DocumentData): Profile {
     address2: data.address2 ? data.address2 : '',
     birthDay: data.birthDay.toDate(),
     ethereumAddress: data.ethereumAddress,
-    createdDate: data.createdDate.toDate()
+    createdDate: data.createdDate.toDate(),
   };
 }
